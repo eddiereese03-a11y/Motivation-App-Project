@@ -91,6 +91,36 @@ daily_message = get_daily_message(st.session_state.user_id)
 st.markdown("")
 st.info(f"**Your daily motivation:**\n\n{daily_message}")
 
+# Share buttons
+st.markdown("")
+col1, col2, col3, col4 = st.columns(4)
+
+# Prepare share text
+share_text = f"Today's motivation: {daily_message}"
+encoded_text = share_text.replace(" ", "%20").replace("\n", "%0A")
+
+with col1:
+    twitter_url = f"https://twitter.com/intent/tweet?text={encoded_text}"
+    st.markdown(f"[🐦 Twitter]({twitter_url})")
+
+with col2:
+    facebook_url = f"https://www.facebook.com/sharer/sharer.php?quote={encoded_text}"
+    st.markdown(f"[📘 Facebook]({facebook_url})")
+
+with col3:
+    linkedin_url = f"https://www.linkedin.com/sharing/share-offsite/?url=&summary={encoded_text}"
+    st.markdown(f"[💼 LinkedIn]({linkedin_url})")
+
+with col4:
+    whatsapp_url = f"https://wa.me/?text={encoded_text}"
+    st.markdown(f"[💬 WhatsApp]({whatsapp_url})")
+
+# Copy to clipboard button
+st.markdown("")
+if st.button("📋 Copy to Clipboard"):
+    st.code(daily_message, language=None)
+    st.success("✅ Message displayed above - select and copy it!")
+
 st.markdown("---")
 st.markdown("*Come back tomorrow for a new inspiring message! 🌟*")
 
